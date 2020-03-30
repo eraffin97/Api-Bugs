@@ -23,7 +23,10 @@ class bugController
 
     public function show($id)
     {
-        // TODO: Instancier le bugManager
+        $bugManager = new BugManager();
+        $bug = $bugManager->find($id);
+        $json = json_encode($bug);
+        return $this->sendHttpResponse($json, 200);
 
         // TODO: Récupérer le Bug
 
