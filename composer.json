@@ -1,0 +1,16 @@
+{
+    "name": "ubuntu/bug-app",
+    "require": {
+        "monolog/monolog": "^2.0",
+        "guzzlehttp/guzzle": "^6.5"
+    }, 
+    "autoload": {
+        "psr-4": {"BugApp\\": "src/"}
+    },
+    "authors": [
+        {
+            "name": "Alexis Romero",
+            "email": "romero.alexis@free.fr"
+        }
+    ]
+}
