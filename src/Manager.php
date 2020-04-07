@@ -22,7 +22,5 @@ class Manager
             }
 
             return $dbh;
-    }  
-    
-
+    }
 }

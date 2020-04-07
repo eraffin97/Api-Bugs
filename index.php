@@ -21,13 +21,13 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 switch (true) {
 
-    // LIST
+    // LIST OF ALL BUGS
 
     case preg_match('#^bug$#', $uri) && $method == 'GET':
         return (new bugController())->list();
         break;
 
-    // IS CLOSED ?
+    // LIST WITH FILTER
 
     case preg_match('#^bug(\?)#', $uri) && $method == 'GET':
         return (new bugController())->list();
@@ -57,7 +57,7 @@ switch (true) {
         return (new bugController())->add();
         break;
     
-
+    // CASE WITH ERROR (PAGE NOT FOUND)
     default:
 
         return (new bugController())->pageNotFound();

@@ -20,11 +20,8 @@ class bugController
         }
 
         $json = json_encode($bugs);
-
         $this->sendHttpResponse($json, 200);
-
     }
-
 
 
     public function show($id)
@@ -33,18 +30,18 @@ class bugController
         $bug = $bugManager->find($id);
         $json = json_encode($bug);
         return $this->sendHttpResponse($json, 200);
-
     }
+
 
     public function update($id)
     {
-
         parse_str(file_get_contents('php://input'), $_PATCH);
 
         $bugManager = new BugManager();
-
         $bug = new Bug();
+
         $bug->setId($id);
+
         if (isset($_PATCH['title'])) {
             $bug->setTitle($_PATCH['title']);
         }
@@ -62,17 +59,14 @@ class bugController
         }
 
         $bugManager->update($bug);
+
         $json = json_encode($bug);
         return $this->sendHttpResponse($json, 200);
-
-
     }
-
 
 
     public function add()
     {
-        
         $bugManager = new BugManager();
 
         $bug = new Bug();
@@ -90,14 +84,12 @@ class bugController
         }
 
         $newBugId = $bugManager->add($bug);
-
         $bug->setId($newBugId);
 
         $json = json_encode($bug);
         return $this->sendHttpResponse($json, 200);
-
-
     }
+
 
     public function pageNotFound() {
         return $this->sendHttpResponse("Page not found", 404);

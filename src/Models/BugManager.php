@@ -23,8 +23,6 @@ class BugManager extends Manager
                 "ip" => $bug->getIp(),
                 "createdAt" => $bug->getCreatedAt()->format("Y-m-d H:i:s")
             ]); 
-                        
-
 
             $id = $dbh->lastInsertId();
 
@@ -32,13 +30,13 @@ class BugManager extends Manager
 
     }
 
-    public function update(Bug $bug){
-
+    public function update(Bug $bug)
+    {
         $dbh = $this->connectDb();  
 
             if($bug->getClosed() != null){
                 $bugGetClosed = $bug->getClosed()->format("Y-m-d H:i:s");
-            }else{
+            } else{
                 $bugGetClosed = null;
             }
 
@@ -52,13 +50,11 @@ class BugManager extends Manager
                 "domain" => $bug->getDomain(),
                 "ip" => $bug->getIp(),
                 "url" => $bug->getUrl(),
-            ]);        
-
+            ]);
     }
 
     public function find($id)
     {
-
         $dbh = $this->connectDb();
 
         $sth = $dbh->prepare('SELECT * FROM bugs WHERE id = :id');
@@ -77,13 +73,11 @@ class BugManager extends Manager
         $bug->setIp($result["ip"]);      
 
         return $bug;
-        
     }
 
 
     public function findAll()
     {
-
         $dbh = $this->connectDb();
 
         $results = $dbh->query('SELECT * FROM `bugs` ORDER BY `id`', \PDO::FETCH_ASSOC);
@@ -113,13 +107,9 @@ class BugManager extends Manager
         $dbh = $this->connectDb();
 
         if($bool === "false"){
-
             $results = $dbh->query('SELECT * FROM `bugs` WHERE closed="0" ORDER BY `id`', \PDO::FETCH_ASSOC);
-
         }else{
-
             $results = $dbh->query('SELECT * FROM `bugs` WHERE closed="1" ORDER BY `id`', \PDO::FETCH_ASSOC);
-
         }
 
         $bugs = [];

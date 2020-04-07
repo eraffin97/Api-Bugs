@@ -91,6 +91,7 @@ class Bug {
      * Set the value of createdAt
      *
      * @return  self
+     * @throws \Exception
      */
     public function setCreatedAt($createdAt)
     {
