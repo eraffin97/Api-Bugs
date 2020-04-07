@@ -24,9 +24,13 @@ switch (true) {
     // LIST
 
     case preg_match('#^bug$#', $uri) && $method == 'GET':
-
         return (new bugController())->list();
+        break;
 
+    // IS CLOSED ?
+
+    case preg_match('#^bug(\?)#', $uri) && $method == 'GET':
+        return (new bugController())->list();
         break;
 
     // SHOW 
@@ -39,12 +43,22 @@ switch (true) {
 
         break;
 
-    // TODO: UPDATE
+    // UPDATE
 
-    // TODO: ADD
+    case preg_match('#^bug/(\d+)$#', $uri, $matches) && $method == 'PATCH':
+        $id = $matches[1];
+
+        return (new bugController())->update($id);
+        break;
+
+    // ADD
+
+    case preg_match('#^bug$#', $uri) && $method == 'POST':
+        return (new bugController())->add();
+        break;
     
 
     default:
 
-    // TODO: page non-trouvée
+        return (new bugController())->pageNotFound();
 }

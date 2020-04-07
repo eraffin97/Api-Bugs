@@ -11,15 +11,21 @@ class bugController
 
     public function list()
     {
-
         $bugManager = new BugManager();
 
-        $bugs = $bugManager->findAll();
+        if (isset($_GET['isClosed'])) {
+            $bugs = $bugManager->findByClosed($_GET['isClosed']);
+        } else {
+            $bugs = $bugManager->findAll();
+        }
 
         $json = json_encode($bugs);
 
-        return $this->sendHttpResponse($json, 200);
+        $this->sendHttpResponse($json, 200);
+
     }
+
+
 
     public function show($id)
     {
@@ -28,38 +34,37 @@ class bugController
         $json = json_encode($bug);
         return $this->sendHttpResponse($json, 200);
 
-        // TODO: Récupérer le Bug
-
-        // TODO: Encoder le Bug
-
-        // TODO: Retourner la réponse Json
-
     }
 
     public function update($id)
     {
 
+        parse_str(file_get_contents('php://input'), $_PATCH);
+
         $bugManager = new BugManager();
 
-        $bug = $bugManager->find($id);
+        $bug = new Bug();
+        $bug->setId($id);
+        if (isset($_PATCH['title'])) {
+            $bug->setTitle($_PATCH['title']);
+        }
 
-        // TODO: Récupérer les données en PATCH
+        if (isset($_PATCH['description'])) {
+            $bug->setDescription($_PATCH['description']);
+        }
 
-        // TODO: Set Title
+        if (isset($_PATCH['url'])) {
+            $bug->setUrl($_PATCH['url']);
+        }
 
-        // TODO: Set Description
+        if (isset($_PATCH['closed'])) {
+            $bug->setClosed($_PATCH['closed']);
+        }
 
-        // TODO: Set Url
+        $bugManager->update($bug);
+        $json = json_encode($bug);
+        return $this->sendHttpResponse($json, 200);
 
-        // TODO: (optionnal) Set Domain + set Ip
-
-        // TODO: Set Closed
-
-        // TODO: persister les données
-
-        // TODO: Encoder le Bug
-
-        // TODO: Retourner la réponse Json
 
     }
 
@@ -72,21 +77,30 @@ class bugController
 
         $bug = new Bug();
 
-        // TODO: Set Title
+        if (isset($_POST['title'])) {
+            $bug->setTitle($_POST['title']);
+        }
 
-        // TODO: Set Description
+        if (isset($_POST['description'])) {
+            $bug->setDescription($_POST['description']);
+        }
 
-        // TODO: Set Url
+        if (isset($_POST['url'])) {
+            $bug->setUrl($_POST['url']);
+        }
 
-        // TODO: (optionnal) Set Domain + set Ip
+        $newBugId = $bugManager->add($bug);
 
-        // TODO: Persister le Bug en BDD et récupérer l'id
+        $bug->setId($newBugId);
 
-        // Set Bug Id
+        $json = json_encode($bug);
+        return $this->sendHttpResponse($json, 200);
 
-        // TODO: Encoder le Bug
 
-        // TODO: Retourner la réponse Json
+    }
+
+    public function pageNotFound() {
+        return $this->sendHttpResponse("Page not found", 404);
     }
 
 

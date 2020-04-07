@@ -91,17 +91,25 @@ class Bug {
      * Set the value of createdAt
      *
      * @return  self
-     */ 
+     */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt = $createdAt;
+        if($createdAt == null){
+
+            $date = new \DateTime();
+
+        }else{
+            $date = \DateTime::createFromFormat('Y-m-d H:i:s', $createdAt);
+        }
+
+        $this->closed = $date;
 
         return $this;
     }
 
     /**
      * Get the value of closed
-     */ 
+     */
     public function getClosed()
     {
         return $this->closed;
@@ -111,26 +119,19 @@ class Bug {
      * Set the value of closed
      *
      * @return  self
-     */ 
-    public function setClosed($date_string)
+     */
+    public function setClosed($closed)
     {
-        
-        if($date_string == null){
 
-            $date = new \DateTime();
-
-        }else{
-            $date = \DateTime::createFromFormat('Y-m-d H:i:s', $date_string);
-        } 
-
-        $this->closed = $date;
+        $this->closed = $closed;
 
         return $this;
+
     }
 
     /**
      * Get the value of domain
-     */ 
+     */
     public function getDomain()
     {
         return $this->domain;
@@ -140,7 +141,7 @@ class Bug {
      * Set the value of domain
      *
      * @return  self
-     */ 
+     */
     public function setDomain($domain)
     {
         $this->domain = $domain;
@@ -150,7 +151,7 @@ class Bug {
 
     /**
      * Get the value of ip
-     */ 
+     */
     public function getIp()
     {
         return $this->ip;
@@ -160,7 +161,7 @@ class Bug {
      * Set the value of ip
      *
      * @return  self
-     */ 
+     */
     public function setIp($ip)
     {
         $this->ip = $ip;
@@ -170,7 +171,7 @@ class Bug {
 
     /**
      * Get the value of url
-     */ 
+     */
     public function getUrl()
     {
         return $this->url;
@@ -180,7 +181,7 @@ class Bug {
      * Set the value of url
      *
      * @return  self
-     */ 
+     */
     public function setUrl($url)
     {
         $this->url = $url;

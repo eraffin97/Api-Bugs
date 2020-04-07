@@ -17,18 +17,18 @@ class BugManager extends Manager
             $sth->execute([
                 "title" => $bug->getTitle(),
                 "description" => $bug->getDescription(),
-                "closed" => null,
+                "closed" => 0,
                 "domain" => $bug->getDomain(),
                 "url" => $bug->getUrl(),
                 "ip" => $bug->getIp(),
                 "createdAt" => $bug->getCreatedAt()->format("Y-m-d H:i:s")
             ]); 
                         
-            // TODO: Décommenter ces lignes pour récupérer l'id ;-)
 
-            // $id = $dbh->lastInsertId();
 
-            // return $id;
+            $id = $dbh->lastInsertId();
+
+            return $id;
 
     }
 
@@ -112,13 +112,13 @@ class BugManager extends Manager
 
         $dbh = $this->connectDb();
 
-        if($bool === false){
+        if($bool === "false"){
 
-            $results = $dbh->query('SELECT * FROM `bugs` WHERE closed IS NULL ORDER BY `id`', \PDO::FETCH_ASSOC);
+            $results = $dbh->query('SELECT * FROM `bugs` WHERE closed="0" ORDER BY `id`', \PDO::FETCH_ASSOC);
 
         }else{
 
-            $results = $dbh->query('SELECT * FROM `bugs` WHERE closed IS NOT NULL ORDER BY `id`', \PDO::FETCH_ASSOC);
+            $results = $dbh->query('SELECT * FROM `bugs` WHERE closed="1" ORDER BY `id`', \PDO::FETCH_ASSOC);
 
         }
 
